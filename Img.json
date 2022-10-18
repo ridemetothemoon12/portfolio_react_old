@@ -1,0 +1,71 @@
+{ 
+    
+"skills": [
+        {
+            "id" : 1,
+            "img" : "./Images/html5.png"
+        },
+        {
+            "id" : 2,
+            "img" : "./Images/css3.png"
+        },
+        {
+            "id" : 3,
+            "img" : "./Images/js.png"
+        },
+        {
+            "id" : 4,
+            "img" : "./Images/ps.png"
+        },
+        {
+            "id" : 5,
+            "img" : "./Images/ai.png"
+        },
+        {
+            "id" : 6,
+            "img" : "./Images/git.png"
+        }
+    ],
+"portfolios": [
+        {
+            "id" : 1,
+            "color": "#BD2137",
+            "width": "500px",
+            "height": "600px",
+            "title" : "Grand Hyatt",
+            "delay" : ".3s"
+        },
+        {
+            "id" : 2,
+            "color": "rgb(138, 138, 241)",
+            "width": "415px",
+            "height": "310px",
+            "top": "40px",
+            "left": "350px",
+            "title" : "Ministry of culture",
+            "delay" : ".6s"
+        },
+        {
+            "id" :3,
+            "color": "#a91054",
+            "width": "415px",
+            "height": "310px",
+            "top": "150px",
+            "left": "700px",
+            "rotate": "45deg",
+            "title" : "Nature Dream",
+            "delay" : ".9s"
+        },
+        {
+            "id" : 4,
+            "color": "rgb(59, 160, 76)",
+            "width": "415px",
+            "height": "310px",
+            "top" : "450px",
+            "left" : "800px",
+            "rotate": "90deg",
+            "title" : "Hilton Hotel",
+            "delay" : "1.2s"
+        }
+    ]
+}
