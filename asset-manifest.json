@@ -1,20 +1,22 @@
 {
   "files": {
-    "main.css": "/portfolio_react/static/css/main.97e77da6.css",
-    "main.js": "/portfolio_react/static/js/main.9a4b0a6b.js",
+    "main.css": "/portfolio_react/static/css/main.852b5528.css",
+    "main.js": "/portfolio_react/static/js/main.c7ce635b.js",
     "static/js/787.1ed0c42c.chunk.js": "/portfolio_react/static/js/787.1ed0c42c.chunk.js",
     "static/media/NotoSansKR-Regular.otf": "/portfolio_react/static/media/NotoSansKR-Regular.e1aa54c04a18648e6468.otf",
     "static/media/SCDream3.otf": "/portfolio_react/static/media/SCDream3.1e55b77199a0afd0ed9a.otf",
     "static/media/SCDream5.otf": "/portfolio_react/static/media/SCDream5.ae5ee4933db75a3ccb04.otf",
     "static/media/SCDream4.otf": "/portfolio_react/static/media/SCDream4.64c9dc7c860af7a004ad.otf",
+    "static/media/NanumSquareR.ttf": "/portfolio_react/static/media/NanumSquareR.924c33f60f994924964c.ttf",
+    "static/media/Cinzel-Regular.ttf": "/portfolio_react/static/media/Cinzel-Regular.6f33f01382c3d24eecb3.ttf",
     "static/media/AlanisHand.ttf": "/portfolio_react/static/media/AlanisHand.a764d6db60be76f85cd3.ttf",
     "index.html": "/portfolio_react/index.html",
-    "main.97e77da6.css.map": "/portfolio_react/static/css/main.97e77da6.css.map",
-    "main.9a4b0a6b.js.map": "/portfolio_react/static/js/main.9a4b0a6b.js.map",
+    "main.852b5528.css.map": "/portfolio_react/static/css/main.852b5528.css.map",
+    "main.c7ce635b.js.map": "/portfolio_react/static/js/main.c7ce635b.js.map",
     "787.1ed0c42c.chunk.js.map": "/portfolio_react/static/js/787.1ed0c42c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.97e77da6.css",
-    "static/js/main.9a4b0a6b.js"
+    "static/css/main.852b5528.css",
+    "static/js/main.c7ce635b.js"
   ]
 }
