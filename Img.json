@@ -38,7 +38,7 @@
         },
         {
             "id" : 2,
-            "color": "rgb(138, 138, 241)",
+            "color": "#29452F",
             "width": "415px",
             "height": "310px",
             "top": "40px",
@@ -61,7 +61,7 @@
         },
         {
             "id" : 4,
-            "color": "rgb(59, 160, 76)",
+            "color": "#183153",
             "width": "415px",
             "height": "310px",
             "top" : "450px",
