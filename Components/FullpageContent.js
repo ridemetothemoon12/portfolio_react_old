@@ -2,7 +2,6 @@
     import ReactFullpage from '@fullpage/react-fullpage'
     import styled from 'styled-components'
     import axios from 'axios'
-    import { NavLink } from 'react-router-dom'
     import { useDispatch } from 'react-redux'
     import { ChangeIndex } from '../store'
     
@@ -63,9 +62,13 @@
     }
     `
     const SectionTwoContentImage = styled.div`
-    background: url("https://via.placeholder.com/810x490");
     width: 810px;
     height: 490px;
+    background: url("./Images/about1.jpg");
+    background-position: center;
+    background-size: cover;
+    filter: hue-rotate(160deg) invert(90%);
+    z-index: -1;
     `
     const userGradient = {
     background: `url("./Images/daegu_night.jpg")`,
