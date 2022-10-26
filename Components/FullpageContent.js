@@ -1,10 +1,17 @@
     import React, { useState, useEffect } from 'react'
     import ReactFullpage from '@fullpage/react-fullpage'
-    import styled from 'styled-components'
+    import styled, { keyframes } from 'styled-components'
     import axios from 'axios'
-    import { useDispatch } from 'react-redux'
-    import { ChangeIndex } from '../store'
-    
+    import { useDispatch, useSelector } from 'react-redux'
+    import { ChangeIndex, ChangeSvgIndex } from '../store'
+    import { createManagedSvgPatternLibrary  } from 'react-svg-patterns'
+
+    const {
+        ManagedSvgPatternLibrary,
+        registerSvgPattern,
+        useSvgPattern,
+    } = createManagedSvgPatternLibrary();
+
     const ContentWrap = styled.div`
     display: flex;
     justify-content: center;
@@ -57,21 +64,56 @@
     position: absolute;
     top: ${(props) => props.top || "0"};
     left: ${(props) => props.left || "0"};
+    display: flex;
+    flex-direction: column;
     p {
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    }
+    `
+    const SectionTwoContentSvgTextWrap = styled.svg`
+    position: absolute;
+    width: 350px;
+    height: 230px;
+    display: flex;
+    flex-direction: column;
+    top: ${(props) => props.top || "0"};
+    left: ${(props) => props.left || "0"};
+    display: flex;
+    flex-direction: column;
+    `
+    const TextDrawer = keyframes`
+    0% { 
+        stroke-dashoffset: 750; 
+    } 
+    100% { 
+        fill: black;
+        stroke-dashoffset: 0; 
+    }
+    `
+    const SectionTwoContentSvgText = styled.text`
+    font-size: 80px;
+    fill: transparent;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    stroke-dashoffset: 750; 
+	stroke-dasharray: 750; 
+    stroke-width: 1.5px;
+    stroke: black;
+    &.on {
+        animation: ${TextDrawer} 1.5s linear;
+        animation-fill-mode: forwards;
     }
     `
     const SectionTwoContentImage = styled.div`
     width: 810px;
     height: 490px;
-    background: url("./Images/about1.jpg");
+    background: url("https://via.placeholder.com/810x490");
     background-position: center;
     background-size: cover;
     filter: hue-rotate(160deg) invert(90%);
     z-index: -1;
     `
     const userGradient = {
-    background: `url("./Images/daegu_night.jpg")`,
+    background: `url("./Images/daegu_night.jpg")`, 
     backgroundSize: "cover",
     WebkitBackgroundClip : "text",
     color: "transparent"
@@ -100,6 +142,9 @@
     left: ${(props) => props.left || "0"};
     width: ${(props) => props.width || "fit-content"};
     height: ${(props) => props.height || "fit-content"};
+    p {
+        font-family: notoSans;
+    }
     `
     const SectionThreeContentImage = styled.div`
     background: url("https://via.placeholder.com/430x650");
@@ -119,20 +164,43 @@
     color: black;
     font-size: 18px;
     line-height: 33px;
-    margin-right: 100px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    `
+    const SectionFourContentIconsWrap = styled.div`
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 100px;
     `
     const SectionFourContentIconWrap = styled.div`
     width: 50px;
     height: 50px;
+    background: url("https://via.placeholder.com/50x50");
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    margin: 0 20px;
-    margin-top: 190px;
+    `
+    const FooterInfos = styled.div`
+    width: 100%;
+    height: 80px;
+    background-color: black;
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(3, 33%);
+    justify-content: center;
+    text-align: center;
+    align-items: center;
     `
     // 풀페이지 세팅 및 출력
     function FullpageContent() {
         const dispatch = useDispatch();
+
+        const pageNavChanger = useSelector((state) => state.svgListIndex.data)
         const [users, setUsers] = useState([]);
         const [users2, setUsers2] = useState([]);
 
@@ -158,7 +226,6 @@
     loading()
     // 이니셜 페이지 포트폴리오 선택 효과
     const clickEvent = function(index, link) {
-        console.log(link)
         const MainEl = document.querySelectorAll("#fullpage");
         const el = document.querySelectorAll(".section.home > div > div > div");
         const Mel = document.querySelectorAll(".home > div > div");
@@ -183,7 +250,7 @@
                 },1500)
                 setTimeout(function(){
                     window.location.replace(link);
-                },3000)
+                },2500)
             }
         }
     }
@@ -196,7 +263,7 @@
         anchors={['firstPage', 'secondPage', 'thirdPage', 'fourthPage']}
         afterLoad={(origin, destination, direction) =>  {
             dispatch(ChangeIndex(destination.index > 1 ? destination.index-1 : destination.index))
-            // dispatch(destination.index)
+            dispatch(ChangeSvgIndex(destination.index))
         }}
         // 렌더 옵션
         render={({ state, fullpageApi }) => {
@@ -224,26 +291,28 @@
                 </div>
                 <div className="section">
                     <ContentWrap>
-                        <SectionTwoContentText>
-                        <p>Test</p>
-                        <p>Work</p>
-                        <p>& Improve.</p>
-                        </SectionTwoContentText>
+                        <SectionTwoContentSvgTextWrap>
+                            <SectionTwoContentSvgText x="2px" y="28%" className={(pageNavChanger === 1 && 'on')}>Test</SectionTwoContentSvgText>
+                            <SectionTwoContentSvgText x="2px" y="61%" className={(pageNavChanger === 1 && 'on')}>Work</SectionTwoContentSvgText>
+                            <SectionTwoContentSvgText x="2px" y="92%" className={(pageNavChanger === 1 && 'on')}>& Improve.</SectionTwoContentSvgText>
+                        </SectionTwoContentSvgTextWrap>
                         <SectionTwoContentImage></SectionTwoContentImage>
-                        <SectionTwoContentText top='586px' left='853px' style={userGradient}>
-                        <p>Publisher</p>
-                        <p>In Daegu.</p>
-                        </SectionTwoContentText>
+                        <SectionTwoContentSvgTextWrap top='586px' left='853px'>
+                            <SectionTwoContentSvgText x="0" y="28%" className={(pageNavChanger === 1 && 'on')}>Publisher</SectionTwoContentSvgText>
+                            <SectionTwoContentSvgText x="0" y="61%" className={(pageNavChanger === 1 && 'on')}>In Daegu.</SectionTwoContentSvgText>
+                        </SectionTwoContentSvgTextWrap>
                     </ContentWrap>
                 </div>
                 <div className="section">
                     <ContentWrap>
                         <SectionThreeContentLeft>
-                        <SectionThreeContentText left='-150px'>
-                            <p>I love</p>
-                            <p>Clean, Neat</p>
-                            <p>Easy Maintenance.</p>
-                        </SectionThreeContentText>
+                            <SectionTwoContentText left='-150px' top='-70px'>
+                        <SectionTwoContentSvgTextWrap style={{width: "607px"}}>
+                            <SectionTwoContentSvgText style={{fontSize: "56px"}} x="0" y="28%" className={(pageNavChanger === 2 && 'on')}>I love</SectionTwoContentSvgText>
+                            <SectionTwoContentSvgText style={{fontSize: "56px"}} x="0" y="61%" className={(pageNavChanger === 2 && 'on')}>Clean, Neat</SectionTwoContentSvgText>
+                            <SectionTwoContentSvgText style={{fontSize: "56px"}} x="0" y="92%" className={(pageNavChanger === 2 && 'on')}>Easy Maintenance.</SectionTwoContentSvgText>
+                        </SectionTwoContentSvgTextWrap>
+                            </SectionTwoContentText>
                         <SectionThreeContentImage></SectionThreeContentImage>
                         <SectionThreeContentText fontSize='18px' top='565px' left='300px' width='510px'>
                         <p>
@@ -266,17 +335,21 @@
                 <div className="section">
                     <ContentWrap>
                         <SectionFourContentTextWrap>
-                        <h1 style={{marginBottom: "30px"}}>Contacts_</h1>
-                        <h3>Phone</h3>
-                        <p>010-2071-7252</p>
-                        <h3>mail</h3>
-                        <p>mhhuh12@naver.com</p>
-                        <p style={{fontFamily: "hands", fontSize: "32px"}}>--------------------------------------------Thanks for watching! -- End of Contents.</p>
-                        <span style={{fontFamily: "hands", fontSize: "32px"}}>Copyrights. All rights reserved. RideMeToTheMoon. JW H.</span>
+                            <h1 style={{marginBottom: "30px", fontFamily: "hands", fontSize: "72px", fontWeight: "normal"}}>Contacts_</h1>
+                            <h3>Phone</h3>
+                            <p>010-2071-7252</p>
+                            <h3>mail</h3>
+                            <p>mhhuh12@naver.com</p>
                         </SectionFourContentTextWrap>
-                        <SectionFourContentIconWrap style={{backgroundImage: `url("./Images/github.png")`}}></SectionFourContentIconWrap>
-                        <SectionFourContentIconWrap style={{backgroundImage: `url("./Images/카카오톡.png")`}}></SectionFourContentIconWrap>
                     </ContentWrap>
+                    <FooterInfos>
+                        <p style={{fontFamily: "hands", fontSize: "32px", gridColumn: "1/2", paddingLeft: "100px"}}>Thanks for watching! -- End of Contents.</p>
+                        <span style={{fontFamily: "notoSans", fontSize: "14px", gridColumn: "2/3", width: "100%"}}>ⓒ All rights reserved. RideMeToTheMoon. JW H.</span>
+                        <SectionFourContentIconsWrap style={{gridColumn: "3/4"}}>
+                            <SectionFourContentIconWrap></SectionFourContentIconWrap>
+                            <SectionFourContentIconWrap></SectionFourContentIconWrap>
+                        </SectionFourContentIconsWrap>
+                    </FooterInfos>
                 </div>
             </ReactFullpage.Wrapper>
             );

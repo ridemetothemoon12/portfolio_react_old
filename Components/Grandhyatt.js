@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components'
-import React,{ useEffect } from 'react'
+import axios from 'axios';
+import React,{useState, useEffect} from 'react'
 import "aos/dist/aos.css";
 import Aos from 'aos';
 import ReactTyped from 'react-typed';
@@ -101,7 +102,7 @@ const ContentItemTwoImageBefore = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url("../images/backimg.png");
+    background-image: url("./Images/backimg.png");
     z-index: 1;
 `
 const ContentItemTwoImageAfter = styled.div`
@@ -110,7 +111,7 @@ const ContentItemTwoImageAfter = styled.div`
     position: absolute; 
     top: 0;
     left: 0;
-    background-image: url("../images/foreimg.png");
+    background-image: url("./Images/foreimg.png");
 `
 const Input = styled.input`
     display: flex;
@@ -333,55 +334,52 @@ const ContentNavigation = styled.div`
     top: 40%;
     left: 95%;
     position: fixed;
-    li {
-        width: 20px;
-        height: 20px;
-        background-color: #BD2137;
-        border-radius: 50%;
-        margin: 30px 0;
-        transition: .3s;
-        cursor: pointer;
-        position: relative;
-        &:nth-child(2) {
-            background-color: #a91054;
-            &:hover::after {
-                content: "Nature Dream";
-            }
+`
+const ContentNavigationLi = styled.li`
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 30px 0;
+    transition: .3s;
+    cursor: pointer;
+    position: relative;
+    background-color: ${(props) => props.color || "skyblue"};
+    &:nth-child(2) {
+        &:hover::after {
+            content: "Ministry of culture";
         }
-        &:nth-child(3) {
-            background-color: skyblue;
-            &:hover::after {
-                content: "test";
-            }
+    }
+    &:nth-child(3) {
+        &:hover::after {
+            content: "Nature dream";
         }
-        &:nth-child(4) {
-            background-color: coral;
-            &:hover::after {
-                content: "test";
-            }
+    }
+    &:nth-child(4) {
+        &:hover::after {
+            content: "Hilton hotel";
         }
-        &:hover {
-            transform: scale(1.8);
-            &::after {
-                position: absolute;
-                top: -5px;
-                left: -120px;
-                width: 150px;
-                height: 30px;
-                font-size: 14px;
-                background-color: black;
-                color: white;
-                text-align: center;
-                line-height: 30px;
-                filter: drop-shadow(0px 0px 0px black);
-                transform: scale(0.5);
-            }
-        }
-        &.on {
-            transform: scale(1.8);
+    }
+    &:hover {
+        transform: scale(1.8);
+        &::after {
+            position: absolute;
+            top: -5px;
+            left: -120px;
+            width: 150px;
+            height: 30px;
+            font-size: 14px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            filter: drop-shadow(0px 0px 0px black);
+            transform: scale(0.5);
         }
     }
 `
+const clickEvent = function(link) {
+    window.location.replace(link);
+}
 function handleChange(e) {
     console.log("changed")
     var pos = e.target.value;
@@ -391,7 +389,18 @@ function handleChange(e) {
     tarbutton.style.left = `calc(${pos}% - 10px)`
 }
 
-function Grandhyatt() {
+function Grandhyatt(props) {
+    const [users, setUsers] = useState([]);
+    const fetchUsers = async () => {
+        const response = await axios.get(
+            'Img.json'
+        );
+        setUsers(response.data.portfolios);
+    };
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
     useEffect(() => {
         Aos.init();
         })
@@ -404,7 +413,7 @@ function Grandhyatt() {
                 <ContentItemOneText data-aos="fade-left" data-aos-duration="1500" data-aos-delay="1700">
                     <span>Grand Hyatt</span>
                     <p>Main page Redesign.</p>
-                    <p><a href="#null">Original</a> <a href="#null">Redesign</a></p>
+                    <p><a href="https://www.hyatt.com/ko-KR/hotel/south-korea/grand-hyatt-jeju/cjugh">Original</a> <a href="#null">Redesign</a></p>
                 </ContentItemOneText>
             </ContentItemOne>
 
@@ -440,7 +449,7 @@ function Grandhyatt() {
 
             <ContentItemThree>
                 <img src="./Images/blender.png" alt="2" data-aos="fade-right" data-aos-offset="100"/>
-                <img src="./Images/reactive_eng.png" alt="2"  style={{position: "absolute", left: "35%"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
+                <img src="./Images/reactive_eng.png" alt="2"  style={{position: "absolute", left: "35%", borderRadius: "30px"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
                 <ContentItemThreeText>
                 <h3>UI & UX.</h3>
                 <p>PC뿐만 아니라 태블릿 환경에서도 웹 페이지를 사용할 수 있도록 반응형으로 설계하였습니다.
@@ -452,7 +461,7 @@ function Grandhyatt() {
                 <ContentItemFourWrap>
                     <ContentItemFourColorsWrap>
                         <p>그랜드 하얏트의 메인 컬러를 이용하여 중요한 정보를 나타내는 부분에 포인트를 넣어 강조하였습니다.</p>
-                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10">#a91054</ContentItemFourColorsItem>
+                        <ContentItemFourColorsItem style={{color: "white"}} data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10">#a91054</ContentItemFourColorsItem>
                         <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="180" data-aos-offset="10">#e8f0f9</ContentItemFourColorsItem>
                         <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="210" data-aos-offset="10">Black & White</ContentItemFourColorsItem>
                     </ContentItemFourColorsWrap>
@@ -520,16 +529,17 @@ function Grandhyatt() {
             </ContentItemFive>
 
             <ContentNavigation>
-                <ul>
-                    <li className='on'><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                </ul>
+            <ul>
+                {
+                    users.map((e,index)=>{
+                        return <ContentNavigationLi key={e.id} color={e.color} onClick={() => clickEvent(e.link)}></ContentNavigationLi>
+                    }) 
+                }
+            </ul>
             </ContentNavigation>
         </Content>
     </>
-  )
+    )
 }
 
 export default Grandhyatt

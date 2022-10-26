@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components'
-import React,{ useEffect } from 'react'
+import axios from 'axios';
+import React,{useState, useEffect} from 'react'
 import "aos/dist/aos.css";
 import Aos from 'aos';
 import ReactTyped from 'react-typed';
@@ -16,7 +17,7 @@ const InitialAnimation = keyframes`
 const Initial = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #BD2137;
+    background-color: #183153;
     z-index: 999;
     position: fixed;
     top: 0;
@@ -41,14 +42,18 @@ const ContentItemOne = styled.div`
     display: flex;
     justify-content: flex-start;
     align-items: flex-end;
+    flex-direction: row-reverse;
 `
 const ContentItemOneText = styled.div`
-    margin-left: 30px;
+    margin-right: 30px;
     flex-basis: 50%;
     font-size: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
     a {
         font-size: 32px;
-        background-color: #BD2137;
+        background-color: #183153;
         padding: 0 5px;
         &:hover {
             color: white;
@@ -57,8 +62,11 @@ const ContentItemOneText = styled.div`
     span {
         width: fit-content;
         padding: 0 5px;
-        background-color: #BD2137;
+        background-color: #183153;
         color: white;
+    }
+    p {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     }
 `
 const ContentItemTwo = styled.div`
@@ -76,11 +84,13 @@ const ContentItemTwoSolutions = styled.div`
 const ContentItemTwoTextWrap = styled.div`
     width: 300px;
     h3 {
-        width: 100%;
-        height: 100%;
+        width: fit-content;
+        padding: 0 5px;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         font-weight: normal;
         font-size: 32px;
+        background-color: #183153;
+        color: white;
     }
 `
 const ContentItemTwoImagesWrap = styled.div`
@@ -96,7 +106,9 @@ const ContentItemTwoImageBefore = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url("../images/backimg.png");
+    background-image: url("./Images/hiltonbefore.png");
+    background-position: top;
+    background-size: cover;
     z-index: 1;
 `
 const ContentItemTwoImageAfter = styled.div`
@@ -105,7 +117,9 @@ const ContentItemTwoImageAfter = styled.div`
     position: absolute; 
     top: 0;
     left: 0;
-    background-image: url("../images/foreimg.png");
+    background-image: url("./Images/hiltonafter.png");
+    background-position: center;
+    background-size: cover;
 `
 const Input = styled.input`
     display: flex;
@@ -123,7 +137,7 @@ const Input = styled.input`
         appearance: none;
         width: 2px;
         height: 800px;
-        background: #BD2137;
+        background: #183153;
         cursor: pointer;
     }
 `
@@ -134,7 +148,7 @@ const ContentItemTwoImagesButton = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #BD2137;
+    background-color: #183153;
     pointer-events: none;
     z-index: 1;
     &::before {
@@ -166,6 +180,12 @@ const ContentItemThree = styled.div`
     flex-direction: row-reverse;
     align-items: flex-end;
     justify-content: space-between;
+    h3 {
+        width: fit-content;
+        background-color: #183153;
+        color: white;
+        padding: 0 5px;
+    }
 `
 const ContentItemThreeText = styled.div`
     max-width: 400px;
@@ -192,6 +212,9 @@ const ContentItemFour = styled.div`
         position: absolute;
         content: "Color & Fonts";
         font-size: 32px;
+        background-color: #183153;
+        padding: 0 5px;
+        color: white;
     }
 `
 const ContentItemFourWrap = styled.div`
@@ -216,18 +239,20 @@ const ContentItemFourColorsItem = styled.div`
     justify-content: center;
     width: 100px;
     height: 100px;
-    background-color: #BD2137;
+    background-color: #183153;
     border-radius: 50%;
     text-align: center;
     align-items: center;
-    color: rgb(49, 49, 49);
+    color: white;
     filter: drop-shadow(0px 0px 3px black);
     &:nth-child(3) {
-        background-color: #e8f0f9;
+        color: rgb(49, 49, 49);
+        background-color: #f8f8f8;
     }
     &:nth-child(4) {
+        color: rgb(49, 49, 49);
         background: rgb(255,255,255);
-        background: linear-gradient(126deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
+        background: linear-gradient(126deg, rgba(255,250,239,1) 0%, rgba(207,216,239,1) 100%);
     }
 `
 const ContentItemFourFontsWrap = styled.div`
@@ -244,9 +269,26 @@ const ContentItemFive = styled.div`
     margin-bottom: 200px;
     display: flex;
     justify-content: flex-start;
+    flex-direction: column;
     img {
         max-width: 800px;
     }
+`
+const ContentItemFiveText = styled.div`
+    margin-bottom: 30px;
+    h3 {
+        width: fit-content;
+        font-size: 32px;
+        padding: 0 5px;
+        background-color: #183153;
+        color: white;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight: normal;
+    }
+`
+const ContentItemFiveImagesDescWrap = styled.div`
+    display: flex;
+    justify-content: flex-start;
 `
 const ContentItemFiveDescWrap = styled.div`
     width: 300px;
@@ -265,7 +307,7 @@ const ContentItemFiveDescWrap = styled.div`
             content: "";
             width: 20px;
             height: 20px;
-            background-color: #BD2137;
+            background-color: #183153;
             border-radius: 50%;
             top: 0;
             left: -10px;
@@ -276,81 +318,79 @@ const ContentItemFiveDescWrap = styled.div`
             content: "";
             width: 60px;
             height: 2px;
-            background-color: #BD2137;
+            background-color: #183153;
             top: 10px;
             left: -60px;
         }
     }
 `
-const ContentItemFiveDescHeader = styled.div``
+const ContentItemFiveDescHeader = styled.div`
+`
 const ContentItemFiveDescContent1 = styled.div`
-    padding-top: 400px;
+    padding-top: 340px;
 `
 const ContentItemFiveDescContent2 = styled.div`
-    padding-top: 350px;
+    padding-top: 320px;
 `
 const ContentItemFiveDescContent3 = styled.div`
-    padding-top: 380px;
+    padding-top: 260px;
 `
 const ContentItemFiveDescContent4 = styled.div`
-    padding-top: 400px;
+    padding-top: 275px;
 `
 const ContentItemFiveDescFooter = styled.div`
-    padding-top: 250px;
+    padding-top: 300px;
 `
 const ContentNavigation = styled.div`
     top: 40%;
     left: 95%;
     position: fixed;
-    li {
-        width: 20px;
-        height: 20px;
-        background-color: #BD2137;
-        border-radius: 50%;
-        margin: 30px 0;
-        transition: .3s;
-        cursor: pointer;
-        position: relative;
-        &:nth-child(2) {
-            background-color: #a91054;
-            &:hover::after {
-                content: "Nature Dream.";
-            }
+`
+const ContentNavigationLi = styled.li`
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 30px 0;
+    transition: .3s;
+    cursor: pointer;
+    position: relative;
+    background-color: ${(props) => props.color || "skyblue"};
+    &:nth-child(2) {
+        &:hover::after {
+            content: "Ministry of culture";
         }
-        &:nth-child(3) {
-            background-color: skyblue;
-            &:hover::after {
-                content: "test";
-            }
+    }
+    &:nth-child(3) {
+        &:hover::after {
+            content: "Nature dream";
         }
-        &:nth-child(4) {
-            background-color: coral;
-            &:hover::after {
-                content: "test";
-            }
+    }
+    &:nth-child(4) {
+        &:hover::after {
+            content: "Hilton hotel";
         }
-        &:hover {
-            transform: scale(1.8);
-            &::after {
-                position: absolute;
-                top: -5px;
-                left: -120px;
-                width: 150px;
-                height: 30px;
-                font-size: 14px;
-                background-color: black;
-                color: white;
-                text-align: center;
-                line-height: 30px;
-                filter: drop-shadow(0px 0px 0px black);
-                transform: scale(0.5);
-            }
-        }
-        &.on {
-            transform: scale(1.8);
+    }
+    &:hover {
+        transform: scale(1.8);
+        &::after {
+            position: absolute;
+            top: -5px;
+            left: -120px;
+            width: 150px;
+            height: 30px;
+            font-size: 14px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            filter: drop-shadow(0px 0px 0px black);
+            transform: scale(0.5);
         }
     }
 `
+const clickEvent = function(link) {
+    window.location.replace(link);
+}
 function handleChange(e) {
     console.log("changed")
     var pos = e.target.value;
@@ -361,19 +401,31 @@ function handleChange(e) {
 }
 
 function Grandhyatt() {
+    const [users, setUsers] = useState([]);
+    const fetchUsers = async () => {
+        const response = await axios.get(
+            'Img.json'
+        );
+        setUsers(response.data.portfolios);
+    };
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
     useEffect(() => {
         Aos.init();
         })
-  return (
+    return (
     <>
-        <Initial>Grand Hyatt</Initial>
+        <Initial>Hilton Hotel</Initial>
         <Content>
             <ContentItemOne>
-                <img src="images/grand_main.png" alt="1" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="1500"/>
-                <ContentItemOneText data-aos="fade-left" data-aos-duration="1500" data-aos-delay="1700">
-                    <span>Grand Hyatt Hotel</span>
-                    <p>Main page Redesign.</p>
-                    <p><a href="#null">Original</a> <a href="#null">Redesign</a></p>
+                <img src="./Images/Hilton_main.png" alt="1" data-aos="fade-left" data-aos-duration="1500" data-aos-delay="1700" />
+                <ContentItemOneText data-aos="fade-right" data-aos-duration="1500" data-aos-delay="1500" >
+                    <p style={{fontSize: "24px", width: "100%", textAlign: "right"}}>Coding 100%.</p>
+                    <span>Hilton Hotel</span>
+                    <p>Main & Sub page Redesign.</p>
+                    <p><a href="https://hilton.co.kr/">Original</a> <a href="https://ridemetothemoon12.github.io/hliton_/">Redesign</a></p>
                 </ContentItemOneText>
             </ContentItemOne>
 
@@ -382,11 +434,8 @@ function Grandhyatt() {
                     <ContentItemTwoTextWrap>
                     <h3>.Problems</h3>
                     <p>
-                    해당 호텔의 이미지나 전체적인 분위기를 알 수 있는 사진이나 설명들이 미흡한 부분이 있습니다.
-                    <br />이에 따라 중복되는 컨탠츠나 특정 컨탠츠에 대한 부가 설명이 존재하지 않는 부분들이 존재하여, 사용자가
-                    호텔에 대한 정보를 얻을 수 없는 경우가 생길 수 있습니다.
-                    <br />
-                    마지막으로 계절에 맞지 않은 정보나, 기간이 지난 게시글이 수정되지 않아 사용자에게 혼란을 줄 수 있습니다.
+                    하나의 화면이 담고 있는 내용이 과도하여 가독성이 떨어지는 설계로 이루어져 있습니다. 이 때문에 각 컨텐츠에서 강조해야 하는 정보나 사진들이
+                    정돈되지 않은 상태로 흩어진 느낌을 줘 사용자에게 피로감을 더해줄 수 있습니다.
                     </p>
                     </ContentItemTwoTextWrap>
                 </ContentItemTwoProblems>
@@ -400,49 +449,47 @@ function Grandhyatt() {
                     <ContentItemTwoTextWrap alignItems="flex-end" data-aos="fade-left" data-aos-offset="10" data-aos-duration="1500">
                     <h3>Solutions.</h3>
                     <p>
-                    호텔의 이미지나 분위기를 알 수 있도록 특정 컨탠츠에 대한 정보를 제목과 부제의 대비를 통해 간략하게 설명하였고,
-                    중복된 이미지 사용이나 컨탠츠의 반복을 줄여, 전체적인 정보를 사용자가 알 수 있도록 설계하였습니다.
-                    <br />
-                    또한 사용자의 UX 관점을 생각하여, 여러 효과나 상호작용을 삽입하여 사용성을 높였습니다.
+                    호텔 사이트라는 점을 최대한 고려하여, 고급진 느낌을 낼 수 있도록 색상과 사진 그리고 폰트를 통일감을 줄 수 있도록 설계하였습니다. 또한 각 컨텐츠별로
+                    정리하여, 사용자에게 정확한 의도를 가지고 정보를 전달할 수 있도록 하였습니다.
                     </p>
                     </ContentItemTwoTextWrap>
                 </ContentItemTwoSolutions>
             </ContentItemTwo>
 
             <ContentItemThree>
-                <img src="images/blender.png" alt="2" data-aos="fade-right" data-aos-offset="100"/>
-                <img src="images/reactive_eng.png" alt="2"  style={{position: "absolute", left: "35%"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
+                <img src="./Images/hiltoncontentmain.png" alt="2" data-aos="fade-right" data-aos-offset="100"/>
+                <img src="./Images/hiltonsub1.png" alt="2"  style={{position: "absolute", left: "50%", top: "15%"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
+                <img src="./Images/hiltonsub2.png" alt="2"  style={{position: "absolute", left: "35%", top: "20%"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="400"/>
                 <ContentItemThreeText>
                 <h3>UI & UX.</h3>
-                <p>PC뿐만 아니라 모바일 또는 태블릿 환경에서도 웹 페이지를 사용할 수 있도록 반응형으로 설계하였습니다.</p>
-                <p>호텔 사용자 특성상 외국인 사용자에게도 정보를 제공할 수 있도록 영문 페이지로도 구현하였습니다.</p>
+                <p>PC 화면이 주는 넓은 느낌을 잘 전달할 수 있도록 Fullpage로 구현하였습니다. 서브페이지 또한 비슷한 흐름을 사용하되, 다른 배치와 효과를 줘 특징점을 부여하였습니다.</p>
                 </ContentItemThreeText>
             </ContentItemThree>
 
             <ContentItemFour>
                 <ContentItemFourWrap>
                     <ContentItemFourColorsWrap>
-                        <p>그랜드 하얏트의 메인 컬러를 이용하여 중요한 정보를 나타내는 부분에 포인트를 넣어 강조하였습니다.</p>
-                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10">BD2137</ContentItemFourColorsItem>
-                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="180" data-aos-offset="10">E8F0F9</ContentItemFourColorsItem>
-                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="210" data-aos-offset="10">Black & White</ContentItemFourColorsItem>
+                        <p>힐튼호텔의 고유 색상을 사용하여 지루할 수 있는 부분에 포인트 컬러로 사용하여, 변칙적인 느낌을 줄 수 있도록 하였습니다.</p>
+                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10">#072745</ContentItemFourColorsItem>
+                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="180" data-aos-offset="10">#f8f8f8</ContentItemFourColorsItem>
+                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="210" data-aos-offset="10">#cfd8ef & #fffaef</ContentItemFourColorsItem>
                     </ContentItemFourColorsWrap>
                     <ContentItemFourFontsWrap>
-                        <p>얇고 각진 느낌이 나는 S-Core Dream 폰트를 사용하여 호텔에서 느낄 수 있는 깔끔하고 세련된 이미지를 강조하였습니다.</p>
-                        <ReactTyped style={{fontSize: "18px"}}
-                        strings={["Make your dreams come true.","S-Core Dream3. 18px", "에스코어 드림"]}
+                        <p>힐튼 호텔의 고급스러운 느낌을 잘 표현해주는 각진 나눔 스퀘어 폰트와 영어에는 Cinzel 폰트를 사용했습니다.</p>
+                        <ReactTyped style={{fontSize: "18px", fontFamily: "nanumR"}}
+                        strings={["Pristine and superb.","Nanum-square Regular. 18px", "나눔 스퀘어"]}
                         typeSpeed={100}
                         backSpeed={50}
                         loop >   
                         </ReactTyped>
-                        <ReactTyped style={{fontSize: "22px"}}
-                        strings={["Make your dreams come true.","S-Core Dream3. 22px", "에스코어 드림"]}
+                        <ReactTyped style={{fontSize: "22px", fontFamily: "nanumR"}}
+                        strings={["Pristine and superb.","Nanum-square Regular. 22px", "나눔 스퀘어"]}
                         typeSpeed={100}
                         backSpeed={50}
                         loop >   
                         </ReactTyped>
-                        <ReactTyped style={{fontSize: "32px"}}
-                        strings={["Make your dreams come true.","S-Core Dream3. 32px", "에스코어 드림"]}
+                        <ReactTyped style={{fontSize: "32px", fontFamily: "cinzelR"}}
+                        strings={["Pristine and superb.","Cinzel Regular. 32px", "Cinzel Regular"]}
                         typeSpeed={100}
                         backSpeed={50}
                         loop >   
@@ -451,47 +498,50 @@ function Grandhyatt() {
                     </ContentItemFourFontsWrap>
                 </ContentItemFourWrap>
             </ContentItemFour>
+
             <ContentItemFive>
-                <img src="images/Artboard 1.png" alt='all' data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10"/>
+            <ContentItemFiveText>
+                <h3>Main Page</h3>
+            </ContentItemFiveText>
+            <ContentItemFiveImagesDescWrap>
+                <img src="./Images/hiltonmain.png" alt='all' data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10"/>
                 <ContentItemFiveDescWrap>
-                    <ContentItemFiveDescHeader>
+                    <ContentItemFiveDescHeader data-aos="fade-right" data-aos-duration="1500" data-aos-offset="30">
                         <h3>Header.</h3>
-                        <p>헤더에 들어가는 불필요한 정보를 최소화 하여, 사용자에게 필요한 정보만 제공하도록 재설계 했습니다.
-                            또한 하단에 예약 퀵메뉴를 배치하여 사용성을 높였습니다.</p>
+                        <p>힐튼 호텔만의 느낌을 알 수 있도록 Swiper로 배너를 설정하였습니다. 또한 사용성 측면을 고려하여 하단부에 숙박예약 관련 Quick menu를 배치하였습니다.</p>
                     </ContentItemFiveDescHeader>
-                    <ContentItemFiveDescContent1>
-                        <h3>Overview.</h3>
-                        <p>해당 호텔에 전경과 메인 로비 전경을 추가하고 전체적인 오버뷰를 설정하여 사용자에게 간략한 정보를 제공할 수 있도록 설계하였습니다.</p>
+                    <ContentItemFiveDescContent1 data-aos="fade-right" data-aos-duration="1500">
+                        <h3>Rooms.</h3>
+                        <p>기존사이트가 담고 있는 객실의 사진들을 끊이지 않고 이어지는 Swiper 스크롤 형태로 구현하였습니다.</p>
                     </ContentItemFiveDescContent1>
-                    <ContentItemFiveDescContent2>
-                        <h3>Curtain Slider.</h3>
-                        <p>호텔의 주요 서비스를 커튼형식으로 배치하여, 사용자에게 정보를 제공함과 동시에, Hover 설정을 통해 원하는 경우 해당 사진을 자세하게 볼 수 있도록 
-                        재설계 하였습니다.</p>
+                    <ContentItemFiveDescContent2 data-aos="fade-right" data-aos-duration="1500">
+                        <h3>Offers.</h3>
+                        <p>한 화면에 해당 컨텐츠에 관련된 사진을 Background로 배치하여 사진과 내용이 조화롭게 보일 수 있도록 설계하였습니다. 또한, Clickevent를 통해 각 컨텐츠를 클릭을 통해 이동할 수 있도록 하였습니다.</p>
                     </ContentItemFiveDescContent2>
-                    <ContentItemFiveDescContent3>
-                        <h3>Accommodations.</h3>
-                        <p>해당 호텔의 객실을 카테고리별 그룹화하여, 각 호실의 전체적인 분위기를 사용자가 예상할 수 있도록 재배치 하였습니다.</p>
+                    <ContentItemFiveDescContent3 data-aos="fade-right" data-aos-duration="1500">
+                        <h3>Dining.</h3>
+                        <p>각 파인 다이닝 메뉴의 특징이 될만한 음식 사진을 통해 사용자에게 기초적인 정보를 제공할 수 있도록 설계하였습니다. 또한 해당 사진에 Hover 효과를 줘 이에 관련하여 자세한 정보를 알려줄 수 있도록 구현하였습니다.</p>
                     </ContentItemFiveDescContent3>
-                    <ContentItemFiveDescContent4>
-                        <h3>Fine Dining.</h3>
-                        <p>가장 큰 특징이라 할 수 있는 파인 다이닝 부분을 따로 컨탠츠화 하여, 전체적인 설명과 분위기, 그리고 운영시간을 한눈에 볼 수 있도록 설계하였습니다.
-                        또한, 해당 부분을 슬라이더 형식으로 구현하여, 사용자가 원하는 부분을 선택하여 볼 수 있도록 만들었으며, 이 또한 Click event로 설정하여 해당 컨탠츠의
-                        사진을 좀 더 크게 볼 수 있도록 사용성 부분을 신경써 재설계 하였습니다.</p>
+                    <ContentItemFiveDescContent4 data-aos="fade-right" data-aos-duration="1500">
+                        <h3>Promotions.</h3>
+                        <p>현재 진행중인 프로모션들을 배치하였습니다. 사진 우측에 해당 내용에 대한 정보를 간략하게 설명한 텍스트를 배치하여 사용성을 높였습니다.</p>
                     </ContentItemFiveDescContent4>
-                    <ContentItemFiveDescFooter>
-                        <h3>Footer.</h3>
-                        <p>이전 사이트의 불필요한 푸터 부분에 들어가는 정보들을 최대한 간략하게 설정하여 필수적인 정보나 운영에 필요한 부분만 축약하여 사용성을 높였습니다.</p>
+                    <ContentItemFiveDescFooter data-aos="fade-right" data-aos-duration="1500">
+                        <h3>Footer & Map.</h3>
+                        <p>호텔의 위치를 Google maps API로 받아와 상단에 배치하였습니다. 하단부에는 footer와 관련된 정보를 배치하여 부가적인 정보를 제공할 수 있도록 설계하였습니다.</p>
                     </ContentItemFiveDescFooter>
                 </ContentItemFiveDescWrap>
+            </ContentItemFiveImagesDescWrap>
             </ContentItemFive>
 
             <ContentNavigation>
-                <ul>
-                    <li className='on'><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                </ul>
+            <ul>
+                {
+                    users.map((e,index)=>{
+                        return <ContentNavigationLi key={e.id} color={e.color} onClick={() => clickEvent(e.link)}></ContentNavigationLi>
+                    }) 
+                }
+            </ul>
             </ContentNavigation>
         </Content>
     </>

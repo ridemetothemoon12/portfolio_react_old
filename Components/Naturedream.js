@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components'
-import React,{ useEffect } from 'react'
+import axios from 'axios';
+import React,{useState, useEffect} from 'react'
 import "aos/dist/aos.css";
 import Aos from 'aos';
 import ReactTyped from 'react-typed';
@@ -105,7 +106,7 @@ const ContentItemTwoImageBefore = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url("../images/backimg2.png");
+    background-image: url("./Images/backimg2.png");
     z-index: 1;
 `
 const ContentItemTwoImageAfter = styled.div`
@@ -114,7 +115,7 @@ const ContentItemTwoImageAfter = styled.div`
     position: absolute; 
     top: 0;
     left: 0;
-    background-image: url("../images/foreimg2.png");
+    background-image: url("./Images/foreimg2.png");
 `
 const Input = styled.input`
     display: flex;
@@ -338,55 +339,52 @@ const ContentNavigation = styled.div`
     top: 40%;
     left: 95%;
     position: fixed;
-    li {
-        width: 20px;
-        height: 20px;
-        background-color: #a91054;
-        border-radius: 50%;
-        margin: 30px 0;
-        transition: .3s;
-        cursor: pointer;
-        position: relative;
-        &:nth-child(1) {
-            background-color: #BD2137;
-            &:hover::after {
-                content: "Grand Hyatt";
-            }
+`
+const ContentNavigationLi = styled.li`
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 30px 0;
+    transition: .3s;
+    cursor: pointer;
+    position: relative;
+    background-color: ${(props) => props.color || "skyblue"};
+    &:nth-child(2) {
+        &:hover::after {
+            content: "Ministry of culture";
         }
-        &:nth-child(3) {
-            background-color: skyblue;
-            &:hover::after {
-                content: "test";
-            }
+    }
+    &:nth-child(3) {
+        &:hover::after {
+            content: "Nature dream";
         }
-        &:nth-child(4) {
-            background-color: coral;
-            &:hover::after {
-                content: "test";
-            }
+    }
+    &:nth-child(4) {
+        &:hover::after {
+            content: "Hilton hotel";
         }
-        &:hover {
-            transform: scale(1.8);
-            &::after {
-                position: absolute;
-                top: -5px;
-                left: -120px;
-                width: 150px;
-                height: 30px;
-                font-size: 14px;
-                background-color: black;
-                color: white;
-                text-align: center;
-                line-height: 30px;
-                filter: drop-shadow(0px 0px 0px black);
-                transform: scale(0.5);
-            }
-        }
-        &.on {
-            transform: scale(1.8);
+    }
+    &:hover {
+        transform: scale(1.8);
+        &::after {
+            position: absolute;
+            top: -5px;
+            left: -120px;
+            width: 150px;
+            height: 30px;
+            font-size: 14px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            filter: drop-shadow(0px 0px 0px black);
+            transform: scale(0.5);
         }
     }
 `
+const clickEvent = function(link) {
+    window.location.replace(link);
+}
 function handleChange(e) {
     console.log("changed")
     var pos = e.target.value;
@@ -397,6 +395,17 @@ function handleChange(e) {
 }
 
 function Grandhyatt() {
+    const [users, setUsers] = useState([]);
+    const fetchUsers = async () => {
+        const response = await axios.get(
+            'Img.json'
+        );
+        setUsers(response.data.portfolios);
+    };
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
     useEffect(() => {
         Aos.init();
         })
@@ -409,7 +418,7 @@ function Grandhyatt() {
                 <ContentItemOneText data-aos="fade-right" data-aos-duration="1500" data-aos-delay="1500" >
                     <span>Nature Dream</span>
                     <p>Main page Redesign.</p>
-                    <p><a href="#null">Original</a> <a href="#null">Redesign</a></p>
+                    <p><a href="http://www.icoop.or.kr/coopmall/">Original</a> <a href="https://ridemetothemoon12.github.io/naturedream_react/">Redesign</a></p>
                 </ContentItemOneText>
             </ContentItemOne>
 
@@ -442,7 +451,7 @@ function Grandhyatt() {
 
             <ContentItemThree>
                 <img src="./Images/blender2.png" alt="2" data-aos="fade-right" data-aos-offset="100"/>
-                <img src="./Images/reactive_eng.png" alt="2"  style={{position: "absolute", left: "35%"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
+                <img src="./Images/reactive_eng.png" alt="2"  style={{position: "absolute", left: "35%", borderRadius: "30px"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
                 <ContentItemThreeText>
                 <h3>UI & UX.</h3>
                 <p>PC뿐만 아니라 사용자의 특성상, 모바일로 정보를 확인하거나 사용하는 경우가 많기 때문에 모바일로 또한 구현하였습니다.</p>
@@ -518,12 +527,13 @@ function Grandhyatt() {
             </ContentItemFive>
 
             <ContentNavigation>
-                <ul>
-                    <li><a></a></li>
-                    <li className='on'><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                </ul>
+            <ul>
+                {
+                    users.map((e,index)=>{
+                        return <ContentNavigationLi key={e.id} color={e.color} onClick={() => clickEvent(e.link)}></ContentNavigationLi>
+                    }) 
+                }
+            </ul>
             </ContentNavigation>
         </Content>
     </>

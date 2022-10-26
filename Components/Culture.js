@@ -1,11 +1,10 @@
 import styled, { keyframes } from 'styled-components'
-import React,{ useEffect } from 'react'
+import axios from 'axios';
+import React,{useState, useEffect} from 'react'
 import "aos/dist/aos.css";
 import Aos from 'aos';
 import ReactTyped from 'react-typed';
 import 'react-typed/dist/animatedCursor.css';
-import { useSelector } from 'react-redux';
-
 
 const InitialAnimation = keyframes`
 0% {
@@ -18,7 +17,7 @@ const InitialAnimation = keyframes`
 const Initial = styled.div`
     width: 100%;
     height: 100%;
-    background-color: #BD2137;
+    background-color: #29452F;
     z-index: 999;
     position: fixed;
     top: 0;
@@ -50,7 +49,7 @@ const ContentItemOneText = styled.div`
     font-size: 48px;
     a {
         font-size: 32px;
-        background-color: #BD2137;
+        background-color: #29452F;
         padding: 0 5px;
         &:hover {
             color: white;
@@ -59,8 +58,11 @@ const ContentItemOneText = styled.div`
     span {
         width: fit-content;
         padding: 0 5px;
-        background-color: #BD2137;
+        background-color: #29452F;
         color: white;
+    }
+    p {
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     }
 `
 const ContentItemTwo = styled.div`
@@ -78,9 +80,13 @@ const ContentItemTwoSolutions = styled.div`
 const ContentItemTwoTextWrap = styled.div`
     width: 300px;
     h3 {
+        width: fit-content;
+        padding: 0 5px;
         font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         font-weight: normal;
         font-size: 32px;
+        background-color: #29452F;
+        color: white;
     }
 `
 const ContentItemTwoImagesWrap = styled.div`
@@ -96,7 +102,9 @@ const ContentItemTwoImageBefore = styled.div`
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url("../images/backimg.png");
+    background-image: url("./Images/culturebefore.png");
+    background-position: center;
+    background-size: cover;
     z-index: 1;
 `
 const ContentItemTwoImageAfter = styled.div`
@@ -105,7 +113,9 @@ const ContentItemTwoImageAfter = styled.div`
     position: absolute; 
     top: 0;
     left: 0;
-    background-image: url("../images/foreimg.png");
+    background-image: url("./Images/cultureafter.png");
+    background-position: top;
+    background-size: cover;
 `
 const Input = styled.input`
     display: flex;
@@ -123,7 +133,7 @@ const Input = styled.input`
         appearance: none;
         width: 2px;
         height: 800px;
-        background: #BD2137;
+        background: #29452F;
         cursor: pointer;
     }
 `
@@ -134,7 +144,7 @@ const ContentItemTwoImagesButton = styled.div`
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #BD2137;
+    background-color: #29452F;
     pointer-events: none;
     z-index: 1;
     &::before {
@@ -166,6 +176,12 @@ const ContentItemThree = styled.div`
     flex-direction: row-reverse;
     align-items: flex-end;
     justify-content: space-between;
+    h3 {
+        width: fit-content;
+        background-color: #29452F;
+        color: white;
+        padding: 0 5px;
+    }
 `
 const ContentItemThreeText = styled.div`
     max-width: 400px;
@@ -192,6 +208,9 @@ const ContentItemFour = styled.div`
         position: absolute;
         content: "Color & Fonts";
         font-size: 32px;
+        background-color: #29452F;
+        padding: 0 5px;
+        color: white;
     }
 `
 const ContentItemFourWrap = styled.div`
@@ -216,16 +235,18 @@ const ContentItemFourColorsItem = styled.div`
     justify-content: center;
     width: 100px;
     height: 100px;
-    background-color: #BD2137;
+    background-color: #143b63;
     border-radius: 50%;
     text-align: center;
     align-items: center;
-    color: rgb(49, 49, 49);
+    color: white;
     filter: drop-shadow(0px 0px 3px black);
     &:nth-child(3) {
+        color: rgb(49, 49, 49);
         background-color: #e8f0f9;
     }
     &:nth-child(4) {
+        color: rgb(49, 49, 49);
         background: rgb(255,255,255);
         background: linear-gradient(126deg, rgba(255,255,255,1) 0%, rgba(0,0,0,1) 100%);
     }
@@ -244,9 +265,26 @@ const ContentItemFive = styled.div`
     margin-bottom: 200px;
     display: flex;
     justify-content: flex-start;
+    flex-direction: column;
     img {
         max-width: 800px;
     }
+`
+const ContentItemFiveText = styled.div`
+    margin-bottom: 30px;
+    h3 {
+        width: fit-content;
+        font-size: 32px;
+        padding: 0 5px;
+        background-color: #29452F;
+        color: white;
+        font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        font-weight: normal;
+    }
+`
+const ContentItemFiveImagesDescWrap = styled.div`
+    display: flex;
+    justify-content: flex-start;
 `
 const ContentItemFiveDescWrap = styled.div`
     width: 300px;
@@ -265,7 +303,7 @@ const ContentItemFiveDescWrap = styled.div`
             content: "";
             width: 20px;
             height: 20px;
-            background-color: #BD2137;
+            background-color: #29452F;
             border-radius: 50%;
             top: 0;
             left: -10px;
@@ -276,7 +314,7 @@ const ContentItemFiveDescWrap = styled.div`
             content: "";
             width: 60px;
             height: 2px;
-            background-color: #BD2137;
+            background-color: #29452F;
             top: 10px;
             left: -60px;
         }
@@ -284,73 +322,70 @@ const ContentItemFiveDescWrap = styled.div`
 `
 const ContentItemFiveDescHeader = styled.div``
 const ContentItemFiveDescContent1 = styled.div`
-    padding-top: 400px;
+    padding-top: 360px;
 `
 const ContentItemFiveDescContent2 = styled.div`
-    padding-top: 350px;
+    padding-top: 90px;
 `
 const ContentItemFiveDescContent3 = styled.div`
-    padding-top: 380px;
+    padding-top: 230px;
 `
 const ContentItemFiveDescContent4 = styled.div`
-    padding-top: 400px;
+    padding-top: 230px;
 `
 const ContentItemFiveDescFooter = styled.div`
-    padding-top: 250px;
+    padding-top: 240px;
 `
 const ContentNavigation = styled.div`
     top: 40%;
     left: 95%;
     position: fixed;
-    li {
-        width: 20px;
-        height: 20px;
-        background-color: #BD2137;
-        border-radius: 50%;
-        margin: 30px 0;
-        transition: .3s;
-        cursor: pointer;
-        position: relative;
-        &:nth-child(2) {
-            background-color: #a91054;
-            &:hover::after {
-                content: "Nature Dream.";
-            }
+`
+const ContentNavigationLi = styled.li`
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    margin: 30px 0;
+    transition: .3s;
+    cursor: pointer;
+    position: relative;
+    background-color: ${(props) => props.color || "skyblue"};
+    &:nth-child(2) {
+        &:hover::after {
+            content: "Ministry of culture";
         }
-        &:nth-child(3) {
-            background-color: skyblue;
-            &:hover::after {
-                content: "test";
-            }
+    }
+    &:nth-child(3) {
+        &:hover::after {
+            content: "Nature dream";
         }
-        &:nth-child(4) {
-            background-color: coral;
-            &:hover::after {
-                content: "test";
-            }
+    }
+    &:nth-child(4) {
+        &:hover::after {
+            content: "Hilton hotel";
         }
-        &:hover {
-            transform: scale(1.8);
-            &::after {
-                position: absolute;
-                top: -5px;
-                left: -120px;
-                width: 150px;
-                height: 30px;
-                font-size: 14px;
-                background-color: black;
-                color: white;
-                text-align: center;
-                line-height: 30px;
-                filter: drop-shadow(0px 0px 0px black);
-                transform: scale(0.5);
-            }
-        }
-        &.on {
-            transform: scale(1.8);
+    }
+    &:hover {
+        transform: scale(1.8);
+        &::after {
+            position: absolute;
+            top: -5px;
+            left: -120px;
+            width: 150px;
+            height: 30px;
+            font-size: 14px;
+            background-color: black;
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            filter: drop-shadow(0px 0px 0px black);
+            transform: scale(0.5);
         }
     }
 `
+const clickEvent = function(link) {
+    window.location.replace(link);
+}
 function handleChange(e) {
     console.log("changed")
     var pos = e.target.value;
@@ -359,36 +394,43 @@ function handleChange(e) {
     tarWindow.style.width = `${pos}%`
     tarbutton.style.left = `calc(${pos}% - 10px)`
 }
+
 function Grandhyatt() {
+    const [users, setUsers] = useState([]);
+    const fetchUsers = async () => {
+        const response = await axios.get(
+            'Img.json'
+        );
+        setUsers(response.data.portfolios);
+    };
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
     useEffect(() => {
         Aos.init();
         })
-        const testNav = useSelector((state) => state.test.name)
-    return (
+  return (
     <>
-    {testNav}
-        <Initial>Grand Hyatt</Initial>
+        <Initial>Ministry of culture</Initial>
         <Content>
             <ContentItemOne>
-                <img src="images/grand_main.png" alt="1" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="1500"/>
+                <img src="./Images/Culture_main.png" alt="1" data-aos="fade-right" data-aos-duration="1500" data-aos-delay="1500"/>
                 <ContentItemOneText data-aos="fade-left" data-aos-duration="1500" data-aos-delay="1700">
-                    <span>Grand Hyatt Hotel</span>
+                    <p style={{fontSize: "24px"}}>Coding 100%.</p>
+                    <span>Ministry of culture</span>
                     <p>Main page Redesign.</p>
-                    <p><a href="#null">Original</a> <a href="#null">Redesign</a></p>
+                    <p><a href="https://www.mcst.go.kr/kor/main.jsp">Original</a> <a href="https://ridemetothemoon12.github.io/culture/">Redesign</a></p>
                 </ContentItemOneText>
             </ContentItemOne>
 
             <ContentItemTwo>
                 <ContentItemTwoProblems data-aos="fade-right" data-aos-offset="10" data-aos-duration="1500">
                     <ContentItemTwoTextWrap>
-                        <h3>.Problems</h3>
-                        <p>
-                        해당 호텔의 이미지나 전체적인 분위기를 알 수 있는 사진이나 설명들이 미흡한 부분이 있습니다.
-                        <br />이에 따라 중복되는 컨탠츠나 특정 컨탠츠에 대한 부가 설명이 존재하지 않는 부분들이 존재하여, 사용자가
-                        호텔에 대한 정보를 얻을 수 없는 경우가 생길 수 있습니다.
-                        <br />
-                        마지막으로 계절에 맞지 않은 정보나, 기간이 지난 게시글이 수정되지 않아 사용자에게 혼란을 줄 수 있습니다.
-                        </p>
+                    <h3>.Problems</h3>
+                    <p>
+                    필요한 정보들이 나열되어 있지만, 해당 컨텐츠들이 난잡하게 배치되어, 사용자가 원하는 부분을 찾기 어렵게 설계되어 있습니다.
+                    </p>
                     </ContentItemTwoTextWrap>
                 </ContentItemTwoProblems>
                     <ContentItemTwoImagesWrap data-aos="fade" data-aos-offset="10" data-aos-duration="1500">
@@ -399,99 +441,100 @@ function Grandhyatt() {
                     </ContentItemTwoImagesWrap>
                 <ContentItemTwoSolutions>
                     <ContentItemTwoTextWrap alignItems="flex-end" data-aos="fade-left" data-aos-offset="10" data-aos-duration="1500">
-                        <h3>Solutions.</h3>
-                        <p>
-                        호텔의 이미지나 분위기를 알 수 있도록 특정 컨탠츠에 대한 정보를 제목과 부제의 대비를 통해 간략하게 설명하였고,
-                        중복된 이미지 사용이나 컨탠츠의 반복을 줄여, 전체적인 정보를 사용자가 알 수 있도록 설계하였습니다.
-                        <br />
-                        또한 사용자의 UX 관점을 생각하여, 여러 효과나 상호작용을 삽입하여 사용성을 높였습니다.
-                        </p>
+                    <h3>Solutions.</h3>
+                    <p>
+                    정부기관 웹페이지라는 특징을 고려하여, 필요한 정보만 정갈하게 배치하여 리디자인하였습니다. 해당 컨텐츠별 특징을 잘 나타내는 사진을 이용하여
+                    기존 사이트의 투박한 느낌을 보완하였습니다.
+                    </p>
                     </ContentItemTwoTextWrap>
                 </ContentItemTwoSolutions>
             </ContentItemTwo>
 
             <ContentItemThree>
-                <img src="images/blender.png" alt="2" data-aos="fade-right" data-aos-offset="100"/>
-                <img src="images/reactive_eng.png" alt="2"  style={{position: "absolute", left: "35%"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
+                <img src="./Images/culturecontent3.png" alt="2" data-aos="fade-right" data-aos-offset="100" data-aos-delay="200"/>
+                <img src="./Images/culturecontenttab.png" alt="2" style={{position: "absolute", left: "45%", borderRadius: "20px"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
+                <img src="./Images/culturecontent3phone.png" alt="2" style={{borderRadius: "20px"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="400"/>
                 <ContentItemThreeText>
-                    <h3>UI & UX.</h3>
-                    <p>PC뿐만 아니라 모바일 또는 태블릿 환경에서도 웹 페이지를 사용할 수 있도록 반응형으로 설계하였습니다.</p>
-                    <p>호텔 사용자 특성상 외국인 사용자에게도 정보를 제공할 수 있도록 영문 페이지로도 구현하였습니다.</p>
+                <h3>UI & UX.</h3>
+                <p>정부기관 사이트를 이용하는 사용자 특성상, 정확한 정보를 표현하는 것이 중요하다고 생각하여 어떤 화면에서도 동일한 컨탠츠를 표시할 수 있도록 반응형으로 구현하였습니다.</p>
                 </ContentItemThreeText>
             </ContentItemThree>
 
             <ContentItemFour>
                 <ContentItemFourWrap>
                     <ContentItemFourColorsWrap>
-                        <p>그랜드 하얏트의 메인 컬러를 이용하여 중요한 정보를 나타내는 부분에 포인트를 넣어 강조하였습니다.</p>
-                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10">BD2137</ContentItemFourColorsItem>
-                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="180" data-aos-offset="10">E8F0F9</ContentItemFourColorsItem>
+                        <p>정부기관 웹 페이지인 만큼, 청렴하고 깨끗한 느낌을 줄 수 있는 짙은 파란색을 사용하였습니다.</p>
+                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10">#143b63</ContentItemFourColorsItem>
+                        <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="180" data-aos-offset="10">#e8f0f9</ContentItemFourColorsItem>
                         <ContentItemFourColorsItem data-aos="fade-right" data-aos-duration="1500" data-aos-delay="210" data-aos-offset="10">Black & White</ContentItemFourColorsItem>
                     </ContentItemFourColorsWrap>
                     <ContentItemFourFontsWrap>
-                        <p>얇고 각진 느낌이 나는 S-Core Dream 폰트를 사용하여 호텔에서 느낄 수 있는 깔끔하고 세련된 이미지를 강조하였습니다.</p>
-                        <ReactTyped style={{fontSize: "18px"}}
-                        strings={["Make your dreams come true.","S-Core Dream3. 18px", "에스코어 드림"]}
+                        <p>정적이고 각진 느낌을 주는 나눔 스퀘어 폰트를 사용하여 신뢰가 느껴질 수 있도록 하였습니다.</p>
+                        <ReactTyped style={{fontSize: "18px", fontFamily: "nanumR"}}
+                        strings={["From Rectangle, Share with love","Nanum-square Regular. 18px", "나눔 스퀘어"]}
                         typeSpeed={100}
                         backSpeed={50}
                         loop >   
                         </ReactTyped>
-                        <ReactTyped style={{fontSize: "22px"}}
-                        strings={["Make your dreams come true.","S-Core Dream3. 22px", "에스코어 드림"]}
+                        <ReactTyped style={{fontSize: "22px", fontFamily: "nanumR"}}
+                        strings={["From Rectangle, Share with love","Nanum-square Regular. 22px", "나눔 스퀘어"]}
                         typeSpeed={100}
                         backSpeed={50}
                         loop >   
                         </ReactTyped>
-                        <ReactTyped style={{fontSize: "32px"}}
-                        strings={["Make your dreams come true.","S-Core Dream3. 32px", "에스코어 드림"]}
+                        <ReactTyped style={{fontSize: "32px", fontFamily: "nanumR"}}
+                        strings={["From Rectangle, Share with love","Nanum-square Regular. 32px", "나눔 스퀘어"]}
                         typeSpeed={100}
                         backSpeed={50}
                         loop >   
                         </ReactTyped>
+                        
                     </ContentItemFourFontsWrap>
                 </ContentItemFourWrap>
             </ContentItemFour>
             <ContentItemFive>
-                <img src="images/Artboard 1.png" alt='all' data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10"/>
-                <ContentItemFiveDescWrap>
-                    <ContentItemFiveDescHeader>
-                        <h3>Header.</h3>
-                        <p>헤더에 들어가는 불필요한 정보를 최소화 하여, 사용자에게 필요한 정보만 제공하도록 재설계 했습니다.
-                        또한 하단에 예약 퀵메뉴를 배치하여 사용성을 높였습니다.</p>
-                    </ContentItemFiveDescHeader>
-                    <ContentItemFiveDescContent1>
-                        <h3>Overview.</h3>
-                        <p>해당 호텔에 전경과 메인 로비 전경을 추가하고 전체적인 오버뷰를 설정하여 사용자에게 간략한 정보를 제공할 수 있도록 설계하였습니다.</p>
-                    </ContentItemFiveDescContent1>
-                    <ContentItemFiveDescContent2>
-                        <h3>Curtain Slider.</h3>
-                        <p>호텔의 주요 서비스를 커튼형식으로 배치하여, 사용자에게 정보를 제공함과 동시에, Hover 설정을 통해 원하는 경우 해당 사진을 자세하게 볼 수 있도록 
-                        재설계 하였습니다.</p>
-                    </ContentItemFiveDescContent2>
-                    <ContentItemFiveDescContent3>
-                        <h3>Accommodations.</h3>
-                        <p>해당 호텔의 객실을 카테고리별 그룹화하여, 각 호실의 전체적인 분위기를 사용자가 예상할 수 있도록 재배치 하였습니다.</p>
-                    </ContentItemFiveDescContent3>
-                    <ContentItemFiveDescContent4>
-                        <h3>Fine Dining.</h3>
-                        <p>가장 큰 특징이라 할 수 있는 파인 다이닝 부분을 따로 컨탠츠화 하여, 전체적인 설명과 분위기, 그리고 운영시간을 한눈에 볼 수 있도록 설계하였습니다.
-                        또한, 해당 부분을 슬라이더 형식으로 구현하여, 사용자가 원하는 부분을 선택하여 볼 수 있도록 만들었으며, 이 또한 Click event로 설정하여 해당 컨탠츠의
-                        사진을 좀 더 크게 볼 수 있도록 사용성 부분을 신경써 재설계 하였습니다.</p>
-                    </ContentItemFiveDescContent4>
-                    <ContentItemFiveDescFooter>
-                        <h3>Footer.</h3>
-                        <p>이전 사이트의 불필요한 푸터 부분에 들어가는 정보들을 최대한 간략하게 설정하여 필수적인 정보나 운영에 필요한 부분만 축약하여 사용성을 높였습니다.</p>
-                    </ContentItemFiveDescFooter>
-                </ContentItemFiveDescWrap>
+                <ContentItemFiveText>
+                    <h3>Main Page</h3>
+                </ContentItemFiveText>
+                <ContentItemFiveImagesDescWrap>
+                    <img src="./Images/culturemain.png" alt='all' data-aos="fade-right" data-aos-duration="1500" data-aos-delay="150" data-aos-offset="10"/>
+                    <ContentItemFiveDescWrap>
+                        <ContentItemFiveDescHeader data-aos="fade-right" data-aos-duration="1500" data-aos-offset="30">
+                            <h3>Header.</h3>
+                            <p>문체부의 특징이 드러나는 사진을 배너 스와이퍼로 구현하였습니다. 또한 커스터마이즈된 버튼을 따로 구현하여 하단에 배치하였습니다.</p>
+                        </ContentItemFiveDescHeader>
+                        <ContentItemFiveDescContent1 data-aos="fade-right" data-aos-duration="1500">
+                            <h3>Main Menu.</h3>
+                            <p>주요 메뉴를 한번에 찾기 쉽도록 아이콘을 이용하여 단순하게 배치하여 사용성을 높였습니다.</p>
+                        </ContentItemFiveDescContent1>
+                        <ContentItemFiveDescContent2 data-aos="fade-right" data-aos-duration="1500">
+                            <h3>Sub Menu.</h3>
+                            <p>세부 메뉴들을 한눈에 볼 수 있도록 구현하였습니다. 마우스 Hover 효과를 줘, 색상과 크기를 통해 특정 페이지로 이동할 수 있다는 느낌을 줬습니다.</p>
+                        </ContentItemFiveDescContent2>
+                        <ContentItemFiveDescContent3 data-aos="fade-right" data-aos-duration="1500">
+                            <h3>Notice.</h3>
+                            <p>뉴스와 알림사항들을 한눈에 볼 수 있도록 설계하였습니다. 또한 좌측에 이벤트 배너를 Swiper로 배치하였습니다.</p>
+                        </ContentItemFiveDescContent3>
+                        <ContentItemFiveDescContent4 data-aos="fade-right" data-aos-duration="1500">
+                            <h3>Category.</h3>
+                            <p>문화, 연극 그리고 뮤지컬 크게 세 카테고리로 나눠 Curtain slide 형태로 배치하였습니다. 해당 컨텐츠에 Hover 시 늘어나는 효과를 줘 사용자가 어떤 컨텐츠에 초점을 맞추고 있는지 알 수 있도록 하였습니다. </p>
+                        </ContentItemFiveDescContent4>
+                        <ContentItemFiveDescFooter data-aos="fade-right" data-aos-duration="1500">
+                            <h3>Footer.</h3>
+                            <p>이전 사이트의 불필요한 푸터 부분에 들어가는 정보들을 최대한 간략하게 설정하여 필수적인 정보나 운영에 필요한 부분만 축약하여 사용성을 높였습니다.</p>
+                        </ContentItemFiveDescFooter>
+                    </ContentItemFiveDescWrap>
+                </ContentItemFiveImagesDescWrap>
             </ContentItemFive>
 
             <ContentNavigation>
-                <ul>
-                    <li className='on'><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                    <li><a></a></li>
-                </ul>
+            <ul>
+                {
+                    users.map((e,index)=>{
+                        return <ContentNavigationLi key={e.id} color={e.color} onClick={() => clickEvent(e.link)}></ContentNavigationLi>
+                    }) 
+                }
+            </ul>
             </ContentNavigation>
         </Content>
     </>

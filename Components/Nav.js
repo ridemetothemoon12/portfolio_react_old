@@ -77,7 +77,7 @@ function Nav() {
     <>
         <Header>
             <HeaderWrap>
-                <HeaderLogo><img src='./Images/Asset 9.png' alt='mainLogo'/></HeaderLogo>
+                <HeaderLogo><img src="./Images/Asset_9.png" alt='mainLogo'/></HeaderLogo>
                 <HeaderMenu>
                     {
                         users.map((e,index)=>{
