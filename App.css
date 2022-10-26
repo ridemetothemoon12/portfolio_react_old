@@ -1,0 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style: none;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+body {
+  background-color: rgb(241, 241, 241);
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+@font-face {
+  font-family: "notoSans";
+  src: url("../public/Fonts/NotoSansKR-Regular.otf");
+}
+@font-face {
+  font-family: "Score3";
+  src: url("../public/Fonts/SCDream3.otf");
+}
+@font-face {
+  font-family: "Score4";
+  src: url("../public/Fonts/SCDream4.otf");
+}
+@font-face {
+  font-family: "Score5";
+  src: url("../public/Fonts/SCDream5.otf");
+}
+@font-face {
+  font-family: hands;
+  src: url("../public/Fonts/AlanisHand.ttf");
+}
+@font-face {
+  font-family: nanumR;
+  src: url("../public/Fonts/NanumSquareR.ttf");
+}
+@font-face {
+  font-family: cinzelR;
+  src: url("../public/Fonts/Cinzel-Regular.ttf");
+}
+p {
+  font-family: notoSans;
+  text-align: justify;
+}
