@@ -147,7 +147,7 @@
     }
     `
     const SectionThreeContentImage = styled.div`
-    background: url("https://via.placeholder.com/430x650");
+    background: url("./Images/about1.jpg");
     width: 430px;
     height: 650px;
     `
@@ -180,7 +180,7 @@
     const SectionFourContentIconWrap = styled.div`
     width: 50px;
     height: 50px;
-    background: url("https://via.placeholder.com/50x50");
+    background: ${(props) => props.background || "none"};
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -346,8 +346,8 @@
                         <p style={{fontFamily: "hands", fontSize: "32px", gridColumn: "1/2", paddingLeft: "100px"}}>Thanks for watching! -- End of Contents.</p>
                         <span style={{fontFamily: "notoSans", fontSize: "14px", gridColumn: "2/3", width: "100%"}}>ⓒ All rights reserved. RideMeToTheMoon. JW H.</span>
                         <SectionFourContentIconsWrap style={{gridColumn: "3/4"}}>
-                            <SectionFourContentIconWrap></SectionFourContentIconWrap>
-                            <SectionFourContentIconWrap></SectionFourContentIconWrap>
+                            <SectionFourContentIconWrap background={"url('./Images/kakao.png')"}></SectionFourContentIconWrap>
+                            <SectionFourContentIconWrap background={"url('./Images/github.png')"}></SectionFourContentIconWrap>
                         </SectionFourContentIconsWrap>
                     </FooterInfos>
                 </div>
