@@ -24,6 +24,18 @@
         {
             "id" : 6,
             "img" : "./Images/git.png"
+        },
+        {
+            "id" : 7,
+            "img" : "./Images/react.png"
+        },
+        {
+            "id" : 8,
+            "img" : "./Images/scss.png"
+        },
+        {
+            "id" : 9,
+            "img" : "./Images/jquery.png"
         }
     ],
 "portfolios": [
