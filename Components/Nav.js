@@ -59,9 +59,7 @@ const HeaderMenuItemLink = styled.a`
 function Nav() {
     // 페이지 변환시 navigation index 설정.
     const pageNavChanger = useSelector((state) => state.listIndex.data)
-    // const dispatch = useDispatch() 
     
-    // Nav.json 파일 import 및 출력 세팅.
     const [users, setUsers] = useState([]);
     const fetchUsers = async () => {
         const response = await axios.get(
@@ -77,7 +75,7 @@ function Nav() {
     <>
         <Header>
             <HeaderWrap>
-                <HeaderLogo><img src="./Images/Asset_9.png" alt='mainLogo'/></HeaderLogo>
+                <HeaderLogo><img src="/Images/Asset_9.png" alt='mainLogo'/></HeaderLogo>
                 <HeaderMenu>
                     {
                         users.map((e,index)=>{

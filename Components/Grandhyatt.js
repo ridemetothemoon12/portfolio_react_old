@@ -413,7 +413,7 @@ function Grandhyatt(props) {
                 <ContentItemOneText data-aos="fade-left" data-aos-duration="1500" data-aos-delay="1700">
                     <span>Grand Hyatt</span>
                     <p>Main page Redesign.</p>
-                    <p><a href="https://www.hyatt.com/ko-KR/hotel/south-korea/grand-hyatt-jeju/cjugh">Original</a> <a href="#null">Redesign</a></p>
+                    <p><a target="_blank" href="https://www.hyatt.com/ko-KR/hotel/south-korea/grand-hyatt-jeju/cjugh">Original</a> <a target="_blank" href="https://ridemetothemoon12.github.io/grandhyatt_react/">Redesign</a></p>
                 </ContentItemOneText>
             </ContentItemOne>
 

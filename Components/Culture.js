@@ -420,7 +420,7 @@ function Grandhyatt() {
                     <p style={{fontSize: "24px"}}>Coding 100%.</p>
                     <span>Ministry of culture</span>
                     <p>Main page Redesign.</p>
-                    <p><a href="https://www.mcst.go.kr/kor/main.jsp">Original</a> <a href="https://ridemetothemoon12.github.io/culture/">Redesign</a></p>
+                    <p><a target="_blank" href="https://www.mcst.go.kr/kor/main.jsp">Original</a> <a target="_blank" href="https://ridemetothemoon12.github.io/culture/">Redesign</a></p>
                 </ContentItemOneText>
             </ContentItemOne>
 

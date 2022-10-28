@@ -425,7 +425,7 @@ function Grandhyatt() {
                     <p style={{fontSize: "24px", width: "100%", textAlign: "right"}}>Coding 100%.</p>
                     <span>Hilton Hotel</span>
                     <p>Main & Sub page Redesign.</p>
-                    <p><a href="https://hilton.co.kr/">Original</a> <a href="https://ridemetothemoon12.github.io/hliton_/">Redesign</a></p>
+                    <p><a target="_blank" href="https://hilton.co.kr/">Original</a> <a target="_blank" href="https://ridemetothemoon12.github.io/hliton_/">Redesign</a></p>
                 </ContentItemOneText>
             </ContentItemOne>
 

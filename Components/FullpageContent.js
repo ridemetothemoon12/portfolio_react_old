@@ -85,7 +85,7 @@
     0% { 
         stroke-dashoffset: 750; 
     } 
-    100% { 
+    100% {
         fill: black;
         stroke-dashoffset: 0; 
     }
@@ -93,6 +93,7 @@
     const SectionTwoContentSvgText = styled.text`
     font-size: 80px;
     fill: transparent;
+    -webkit-background-clip: text;
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     stroke-dashoffset: 750; 
 	stroke-dasharray: 750; 
@@ -106,7 +107,7 @@
     const SectionTwoContentImage = styled.div`
     width: 810px;
     height: 490px;
-    background: url("https://via.placeholder.com/810x490");
+    background: url("./Images/about1.jpg");
     background-position: center;
     background-size: cover;
     filter: hue-rotate(160deg) invert(90%);
@@ -138,6 +139,7 @@
     font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
     font-size: ${(props) => props.fontSize || "56px"};
     color: black;
+    font-weight: bold;
     top: ${(props) => props.top || "-50px"};
     left: ${(props) => props.left || "0"};
     width: ${(props) => props.width || "fit-content"};
@@ -147,7 +149,9 @@
     }
     `
     const SectionThreeContentImage = styled.div`
-    background: url("./Images/about1.jpg");
+    background: url("./Images/about2.jpg");
+    background-position: center;
+    background-size: 120%;
     width: 430px;
     height: 650px;
     `
@@ -298,6 +302,7 @@
                         </SectionTwoContentSvgTextWrap>
                         <SectionTwoContentImage></SectionTwoContentImage>
                         <SectionTwoContentSvgTextWrap top='586px' left='853px'>
+                            <img style={{width: "320px", height: "320px"}} src='./Images/daegu_night.jpg' alt='22' />
                             <SectionTwoContentSvgText x="0" y="28%" className={(pageNavChanger === 1 && 'on')}>Publisher</SectionTwoContentSvgText>
                             <SectionTwoContentSvgText x="0" y="61%" className={(pageNavChanger === 1 && 'on')}>In Daegu.</SectionTwoContentSvgText>
                         </SectionTwoContentSvgTextWrap>
@@ -314,11 +319,11 @@
                         </SectionTwoContentSvgTextWrap>
                             </SectionTwoContentText>
                         <SectionThreeContentImage></SectionThreeContentImage>
-                        <SectionThreeContentText fontSize='18px' top='565px' left='300px' width='510px'>
+                        <SectionThreeContentText fontSize='18px' top='570px' left='295px' width='510px'>
                         <p>
                             간결한 디자인을 정돈된 코드 위에 표현하는 것을 좋아하고, 자유롭게 그려내는 웹 퍼블리셔가
                             되는 것을 목표로 하고 있습니다.</p>
-                        <p style={{marginTop: "40px"}}> 
+                        <p style={{marginTop: "14px"}}> 
                             모든 일의 100%에 도달하는데 있어 가장 큰 장애물은 99%에서 "여기까지 했으면 다 했지." 라고 말하며 
                             그 현실에 안주하는 것이라고 생각합니다. 저는 그 1%의 차이를 아는 퍼블리셔를 추구합니다.</p>
                         </SectionThreeContentText>
@@ -347,7 +352,7 @@
                         <span style={{fontFamily: "notoSans", fontSize: "14px", gridColumn: "2/3", width: "100%"}}>ⓒ All rights reserved. RideMeToTheMoon. JW H.</span>
                         <SectionFourContentIconsWrap style={{gridColumn: "3/4"}}>
                             <SectionFourContentIconWrap background={"url('./Images/kakao.png')"}></SectionFourContentIconWrap>
-                            <SectionFourContentIconWrap background={"url('./Images/github.png')"}></SectionFourContentIconWrap>
+                            <SectionFourContentIconWrap style={{filter: "invert(100%)"}}background={"url('./Images/github.png')"}></SectionFourContentIconWrap>
                         </SectionFourContentIconsWrap>
                     </FooterInfos>
                 </div>

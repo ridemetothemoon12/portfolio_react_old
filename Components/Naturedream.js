@@ -418,7 +418,7 @@ function Grandhyatt() {
                 <ContentItemOneText data-aos="fade-right" data-aos-duration="1500" data-aos-delay="1500" >
                     <span>Nature Dream</span>
                     <p>Main page Redesign.</p>
-                    <p><a href="http://www.icoop.or.kr/coopmall/">Original</a> <a href="https://ridemetothemoon12.github.io/naturedream_react/">Redesign</a></p>
+                    <p><a target="_blank" href="http://www.icoop.or.kr/coopmall/">Original</a> <a target="_blank" href="https://ridemetothemoon12.github.io/naturedream_react/">Redesign</a></p>
                 </ContentItemOneText>
             </ContentItemOne>
 
@@ -451,10 +451,10 @@ function Grandhyatt() {
 
             <ContentItemThree>
                 <img src="./Images/blender2.png" alt="2" data-aos="fade-right" data-aos-offset="100"/>
-                <img src="./Images/reactive_eng.png" alt="2"  style={{position: "absolute", left: "35%", borderRadius: "30px"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
+                <img src="./Images/reactivenature.png" alt="2"  style={{position: "absolute", left: "35%", borderRadius: "30px"}} data-aos="fade-right" data-aos-offset="100" data-aos-delay="300"/>
                 <ContentItemThreeText>
                 <h3>UI & UX.</h3>
-                <p>PC뿐만 아니라 사용자의 특성상, 모바일로 정보를 확인하거나 사용하는 경우가 많기 때문에 모바일로 또한 구현하였습니다.</p>
+                <p>PC뿐만 아니라 사용자의 특성상, 대화면의 모바일 및 테블릿에서 사용하는 경우가 많은 점을 고려하여 테블릿 반응형으로 구현하였습니다.</p>
                 </ContentItemThreeText>
             </ContentItemThree>
 
